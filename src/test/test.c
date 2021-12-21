@@ -1,4 +1,5 @@
 #include "src/list.h"
+#include "pthread.h"
 #include "string.h"
 #include "assert.h"
 
@@ -63,10 +64,35 @@ void shouldReturnSortedList() {
     printSuccess(__func__);
 }
 
+typedef struct args {
+    List *list;
+    int elemToInsert;
+} Arguments;
+
+void *append(void *arg) {
+    Arguments *args = (Arguments *) arg;
+    List *list = args->list;
+    List_append(list, args->elemToInsert);
+    pthread_exit(NULL);
+}
+
 int main() {
-    shouldReturnListLengthZero();
-    shouldReturnListLengthTwo();
-    shouldReturnSortedList();
+//    shouldReturnListLengthZero();
+//    shouldReturnListLengthTwo();
+//    shouldReturnSortedList();
+    List *list = newList();
+
+    pthread_t pthreads[5];
+    for (int i = 0; i < 5; i++) {
+        Arguments args = {list, i};
+        pthread_create(&pthreads[i], NULL, append, &args);
+    }
+
+    for (int i = 0; i < 5; i++) {
+        List_print(list);
+        pthread_join(pthreads[i], NULL);
+    }
+
     return 0;
 }
 
