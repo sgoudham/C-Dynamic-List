@@ -11,7 +11,14 @@
 
 typedef struct list List;
 
-List *newList();
+/*
+ * Function: List_new
+ * ----------------------------
+ *  Return a new list that has been dynamically allocated memory on the heap
+ *
+ *  returns: int (Pointer To List)
+ */
+List *List_new();
 
 /*
  * Function: List_get

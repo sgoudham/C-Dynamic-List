@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "src/list.h"
 #include "pthread.h"
 #include "string.h"
@@ -14,7 +15,7 @@ void printSuccess(const char method[]) {
 
 void shouldReturnListLengthZero() {
     // Arrange
-    List *list = newList();
+    List *list = List_new();
 
     // Act -> Assert
     assert(List_length(list) == 0);
@@ -25,7 +26,7 @@ void shouldReturnListLengthZero() {
 
 void shouldReturnListLengthTwo() {
     // Arrange
-    List *list = newList();
+    List *list = List_new();
     List_append(list, 1);
     List_append(list, 2);
 
@@ -38,7 +39,7 @@ void shouldReturnListLengthTwo() {
 
 void shouldReturnSortedList() {
     // Arrange
-    List *list = newList();
+    List *list = List_new();
     List_append(list, 10);
     List_append(list, 9);
     List_append(list, 8);
@@ -80,18 +81,22 @@ int main() {
 //    shouldReturnListLengthZero();
 //    shouldReturnListLengthTwo();
 //    shouldReturnSortedList();
-    List *list = newList();
 
-    pthread_t pthreads[5];
-    for (int i = 0; i < 5; i++) {
+    List *list = List_new();
+
+    pthread_t pthreads[2];
+    for (int i = 0; i < 2; i++) {
+        printf("\nElement To Insert -> %i", i);
         Arguments args = {list, i};
         pthread_create(&pthreads[i], NULL, append, &args);
     }
 
-    for (int i = 0; i < 5; i++) {
-        List_print(list);
+    for (int i = 0; i < 2; i++) {
         pthread_join(pthreads[i], NULL);
     }
+
+    printf("\n\nList: \n");
+    List_print(list);
 
     return 0;
 }

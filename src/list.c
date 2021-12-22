@@ -21,6 +21,7 @@ typedef struct list {
     int *_array;
     int _currentSize;
     int _maxSize;
+    pthread_mutex_t simpleMutex;
 } List;
 
 int errorCodes[ERRNO_SIZE] = {
@@ -31,8 +32,13 @@ int errorCodes[ERRNO_SIZE] = {
         ERRNO_005
 };
 
-List *newList() {
-    return List_createList(10, -1);
+List *List_new() {
+    List *list = List_createList(10, -1);
+    if (!list) {
+        return NULL;
+    }
+    pthread_mutex_init(&list->simpleMutex, NULL);
+    return list;
 }
 
 int List_get(List *list, int index) {
@@ -49,6 +55,10 @@ int List_append(List *list, int element) {
         }
     }
 
+    // Beginning of Critical Section
+    pthread_mutex_lock(&(list->simpleMutex));
+    printf("\nMutex Locked!");
+
     if (list->_currentSize + 1 == list->_maxSize) {
         list->_maxSize *= 2;
         int *temp = realloc(list->_array, list->_maxSize * sizeof(int));
@@ -58,6 +68,10 @@ int List_append(List *list, int element) {
         list->_array = temp;
     }
     list->_array[++list->_currentSize] = element;
+
+    // End of Critical Section
+    pthread_mutex_unlock(&(list->simpleMutex));
+    printf("\nMutex Unlocked!");
 
     return 0;
 }
@@ -190,6 +204,10 @@ int List_length(List *list) {
 }
 
 void List_print(List *list) {
+
+    // Beginning Of Critical Section
+    pthread_mutex_lock(&(list->simpleMutex));
+
     printf("[");
     for (int i = 0; i < list->_currentSize + 1; i++) {
         if (i == list->_currentSize) {
@@ -199,6 +217,9 @@ void List_print(List *list) {
         }
     }
     printf("]");
+
+    // End Of Critical Section
+    pthread_mutex_unlock(&(list->simpleMutex));
 }
 
 void List_destroy(List **list) {
