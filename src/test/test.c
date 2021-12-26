@@ -133,6 +133,37 @@ void shouldCopyPopulatedList() {
     printSuccess(__func__);
 }
 
+void shouldInsertElementIntoListIndexZero() {
+    // Arrange
+    List *list = List_new();
+    List_append(list, 1);
+
+    // Act
+    List_insert(list, 0, 0);
+
+    // Assert
+    assert(List_get(list, 0) == 0);
+    List_destroy(&list);
+
+    printSuccess(__func__);
+}
+
+void shouldCopyEmptyList() {
+    // Arrange
+    List *list = List_new();
+
+    // Act
+    List *copiedList = List_copy(list);
+
+    // Assert
+    assert(List_length(copiedList) == 0);
+    assert(List_maxLength(copiedList) == 10);
+    List_destroy(&list);
+    List_destroy(&copiedList);
+
+    printSuccess(__func__);
+}
+
 int main() {
     printf("============================================");
     printf("\nSTART TESTING");
@@ -143,6 +174,8 @@ int main() {
     shouldClearList();
     shouldReturnListMaxLengthTwenty();
     shouldCopyPopulatedList();
+    shouldCopyEmptyList();
+    shouldInsertElementIntoListIndexZero();
     printf("\n\n============================================");
     printf("\nFINISH TESTING");
     printf("\n============================================");
