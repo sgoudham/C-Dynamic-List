@@ -1,5 +1,4 @@
 #include "list.h"
-#include "pthread.h"
 
 /*
  * -- ERROR CODES --
