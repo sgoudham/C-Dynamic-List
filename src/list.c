@@ -103,15 +103,20 @@ int List_merge(List *list, int start_index, int mid_index, int end_index) {
     }
     List *right = List_slice(list, mid_index + 1, end_index + 1);
     if (!right) {
+        List_destroy(&left);
         return 1;
     }
 
     int leftSuccessCode = List_append(left, INT_MAX);
     if (leftSuccessCode != 0) {
+        List_destroy(&left);
+        List_destroy(&right);
         return 1;
     }
     int rightSuccessCode = List_append(right, INT_MAX);
     if (rightSuccessCode != 0) {
+        List_destroy(&left);
+        List_destroy(&right);
         return 1;
     }
 
