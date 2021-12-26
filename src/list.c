@@ -21,7 +21,6 @@ typedef struct list {
     int *_array;
     int _currentSize;
     int _maxSize;
-    pthread_mutex_t simpleMutex;
 } List;
 
 int errorCodes[ERRNO_SIZE] = {
@@ -37,7 +36,6 @@ List *List_new() {
     if (!list) {
         return NULL;
     }
-    pthread_mutex_init(&list->simpleMutex, NULL);
     return list;
 }
 
