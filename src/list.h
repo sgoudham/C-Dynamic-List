@@ -49,7 +49,7 @@ int List_append(List *list, int element);
  * ----------------------------
  *  Insert the given element into a valid index of the list
  *
- *  *list: the list to append onto
+ *  *list: the list to insert into
  *  index: the index to insert the given value
  *  element: the element to insert into the list
  *
@@ -60,10 +60,10 @@ int List_insert(List *list, int index, int element);
 /*
  * Function: List_remove(List *list, int element)
  * ----------------------------
- *  Append an element onto the end of the list
+ *  Remove the first occurrence of the given element from the given list
  *
- *  *list: the list to append onto
- *  element: the element to insert into the list
+ *  *list: the list to remove given element from
+ *  element: the element to remove from the given list
  *
  *  returns: int (0 for success, Non-0 for error)
  */
@@ -72,9 +72,13 @@ int List_remove(List *list, int element);
 /*
  * Function: List_sort(List *list)
  * ----------------------------
- *  Sorts the given list into ascending order in-place
+ *  Sort the given list into ascending order
  *
- *  *list: the list to sort in-place
+ *  ==============================
+ *  WARNING: This is an in-place operation
+ *  ==============================
+ *
+ *  *list: the list to sort
  *
  *  returns: int (0 for success, Non-0 for error)
  */
