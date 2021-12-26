@@ -55,10 +55,6 @@ int List_append(List *list, int element) {
         }
     }
 
-    // Beginning of Critical Section
-    pthread_mutex_lock(&(list->simpleMutex));
-    printf("\nMutex Locked!");
-
     if (list->_currentSize + 1 == list->_maxSize) {
         list->_maxSize *= 2;
         int *temp = realloc(list->_array, list->_maxSize * sizeof(int));
@@ -68,10 +64,6 @@ int List_append(List *list, int element) {
         list->_array = temp;
     }
     list->_array[++list->_currentSize] = element;
-
-    // End of Critical Section
-    pthread_mutex_unlock(&(list->simpleMutex));
-    printf("\nMutex Unlocked!");
 
     return 0;
 }
@@ -178,6 +170,19 @@ List *List_copy(List *list) {
     return listCopy;
 }
 
+int List_clear(List *list) {
+    if (!list) {
+        return 1;
+    }
+
+    for (int i = 0; i < list->_currentSize + 1; i++) {
+        list->_array[i] = 0;
+    }
+    list->_currentSize = -1;
+
+    return 0;
+}
+
 List *List_slice(List *list, int start_index, int end_index) {
     if (start_index >= end_index) {
         return NULL;
@@ -203,11 +208,11 @@ int List_length(List *list) {
     return list->_currentSize + 1;
 }
 
+int List_maxLength(List *list) {
+    return list->_maxSize;
+}
+
 void List_print(List *list) {
-
-    // Beginning Of Critical Section
-    pthread_mutex_lock(&(list->simpleMutex));
-
     printf("[");
     for (int i = 0; i < list->_currentSize + 1; i++) {
         if (i == list->_currentSize) {
@@ -217,9 +222,6 @@ void List_print(List *list) {
         }
     }
     printf("]");
-
-    // End Of Critical Section
-    pthread_mutex_unlock(&(list->simpleMutex));
 }
 
 void List_destroy(List **list) {
