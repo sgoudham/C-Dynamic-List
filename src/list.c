@@ -80,6 +80,7 @@ int List_remove(List *list, int element) {
     for (int i = 0; i < list->_currentSize + 1; i++) {
         if (list->_array[i] == element) {
             positionToDelete = i;
+            break;
         }
     }
 
