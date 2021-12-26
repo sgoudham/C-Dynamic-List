@@ -6,12 +6,10 @@ void printSuccess(const char method[]) {
     unsigned long strLength = 18 + strlen(method);
     char message[strLength];
 
-    printf("\n------------------------------");
     strcpy(message, "\n");
     strcat(message, method);
     strcat(message, " --> TEST PASSED");
     printf("%s", message);
-    printf("\n------------------------------");
 }
 
 void shouldReturnListLengthZero() {
@@ -136,12 +134,18 @@ void shouldCopyPopulatedList() {
 }
 
 int main() {
+    printf("============================================");
+    printf("\nSTART TESTING");
+    printf("\n============================================\n");
     shouldReturnListLengthZero();
     shouldReturnListLengthTwo();
     shouldReturnSortedList();
     shouldClearList();
     shouldReturnListMaxLengthTwenty();
     shouldCopyPopulatedList();
+    printf("\n\n============================================");
+    printf("\nFINISH TESTING");
+    printf("\n============================================");
     return 0;
 }
 
