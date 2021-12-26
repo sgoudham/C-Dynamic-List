@@ -1,12 +1,13 @@
-#include <unistd.h>
 #include "src/list.h"
-#include "pthread.h"
 #include "string.h"
 #include "assert.h"
 
 void printSuccess(const char method[]) {
+    unsigned long strLength = 18 + strlen(method);
+    char message[strLength];
+
     printf("\n------------------------------");
-    char message[100] = "\n";
+    strcpy(message, "\n");
     strcat(message, method);
     strcat(message, " --> TEST PASSED");
     printf("%s", message);
@@ -57,7 +58,7 @@ void shouldReturnSortedList() {
 
     // Assert
     assert(returnCode == 0);
-    for (int i = 0; i < 11; i++) {
+    for (int i = 0; i < List_length(list); i++) {
         assert(List_get(list, i) == i);
     }
     List_destroy(&list);
@@ -65,39 +66,82 @@ void shouldReturnSortedList() {
     printSuccess(__func__);
 }
 
-typedef struct args {
-    List *list;
-    int elemToInsert;
-} Arguments;
+void shouldClearList() {
+    // Arrange
+    List *list = List_new();
+    List_append(list, 0);
+    List_append(list, 1);
+    List_append(list, 2);
+    List_append(list, 3);
 
-void *append(void *arg) {
-    Arguments *args = (Arguments *) arg;
-    List *list = args->list;
-    List_append(list, args->elemToInsert);
-    pthread_exit(NULL);
+    // Act
+    List_clear(list);
+
+    // Assert
+    assert(List_length(list) == 0);
+    List_destroy(&list);
+
+    printSuccess(__func__);
+}
+
+void shouldReturnListMaxLengthTwenty() {
+    // Arrange
+    List *list = List_new();
+    List_append(list, 0);
+    List_append(list, 1);
+    List_append(list, 2);
+    List_append(list, 3);
+    List_append(list, 4);
+    List_append(list, 5);
+    List_append(list, 6);
+    List_append(list, 7);
+    List_append(list, 8);
+    List_append(list, 9);
+
+    // Mid-Assert
+    assert(List_maxLength(list) == 10);
+
+    // Act
+    List_append(list, 10);
+
+    // Assert
+    assert(List_maxLength(list) == 20);
+    List_destroy(&list);
+
+    printSuccess(__func__);
+}
+
+void shouldCopyPopulatedList() {
+    // Arrange
+    List *list = List_new();
+    List_append(list, 0);
+    List_append(list, 1);
+    List_append(list, 2);
+    List_append(list, 3);
+    List_append(list, 4);
+
+    // Act
+    List *copiedList = List_copy(list);
+
+    // Assert
+    assert(List_length(copiedList) == List_length(list));
+    assert(List_maxLength(copiedList) == List_maxLength(list));
+    for (int i = 0; i < List_length(copiedList); i++) {
+        assert(List_get(list, i) == List_get(copiedList, i));
+    }
+    List_destroy(&list);
+    List_destroy(&copiedList);
+
+    printSuccess(__func__);
 }
 
 int main() {
-//    shouldReturnListLengthZero();
-//    shouldReturnListLengthTwo();
-//    shouldReturnSortedList();
-
-    List *list = List_new();
-
-    pthread_t pthreads[2];
-    for (int i = 0; i < 2; i++) {
-        printf("\nElement To Insert -> %i", i);
-        Arguments args = {list, i};
-        pthread_create(&pthreads[i], NULL, append, &args);
-    }
-
-    for (int i = 0; i < 2; i++) {
-        pthread_join(pthreads[i], NULL);
-    }
-
-    printf("\n\nList: \n");
-    List_print(list);
-
+    shouldReturnListLengthZero();
+    shouldReturnListLengthTwo();
+    shouldReturnSortedList();
+    shouldClearList();
+    shouldReturnListMaxLengthTwenty();
+    shouldCopyPopulatedList();
     return 0;
 }
 
