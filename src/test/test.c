@@ -36,7 +36,7 @@ void shouldReturnListLengthTwo() {
     printSuccess(__func__);
 }
 
-void shouldReturnSortedList() {
+void shouldReturnSortedListInAscendingOrder() {
     // Arrange
     List *list = List_new();
     List_append(list, 10);
@@ -52,7 +52,7 @@ void shouldReturnSortedList() {
     List_append(list, 0);
 
     // Act
-    int returnCode = List_sort(list);
+    int returnCode = List_sort(list, false);
 
     // Assert
     assert(returnCode == 0);
@@ -191,7 +191,7 @@ int main() {
     printf("\n============================================\n");
     shouldReturnListLengthZero();
     shouldReturnListLengthTwo();
-    shouldReturnSortedList();
+    shouldReturnSortedListInAscendingOrder();
     shouldClearList();
     shouldReturnListMaxLengthTwenty();
     shouldCopyPopulatedList();

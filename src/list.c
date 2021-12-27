@@ -10,11 +10,19 @@
  * [ERRNO 2147483642] -> Element Does Not Exist Within List
  */
 
+#define DEFAULT_MAX_SIZE 10
+#define ERRNO_001 2147483646
+#define ERRNO_002 2147483645
+#define ERRNO_003 2147483644
+#define ERRNO_004 2147483643
+#define ERRNO_005 2147483642
+#define ERRNO_SIZE 5
+
 List *List_createList(int maxSize, int currentSize);
 
-int List_merge(List *list, int start_index, int mid_index, int end_index);
+int List_merge(List *list, int start_index, int mid_index, int end_index, bool reverse);
 
-int List_mergeSort(List *list, int start_index, int end_index);
+int List_mergeSort(List *list, int start_index, int end_index, bool reverse);
 
 typedef struct list {
     int *_array;
@@ -31,7 +39,7 @@ int errorCodes[ERRNO_SIZE] = {
 };
 
 List *List_new() {
-    List *list = List_createList(10, -1);
+    List *list = List_createList(DEFAULT_MAX_SIZE, -1);
     if (!list) {
         return NULL;
     }
@@ -95,7 +103,7 @@ int List_remove(List *list, int element) {
     return 0;
 }
 
-int List_merge(List *list, int start_index, int mid_index, int end_index) {
+int List_merge(List *list, int start_index, int mid_index, int end_index, bool reverse) {
     List *left = List_slice(list, start_index, mid_index + 1);
     if (!left) {
         return 1;
@@ -106,29 +114,28 @@ int List_merge(List *list, int start_index, int mid_index, int end_index) {
         return 1;
     }
 
-    int leftSuccessCode = List_append(left, INT_MAX);
-    if (leftSuccessCode != 0) {
-        List_destroy(&left);
-        List_destroy(&right);
-        return 1;
-    }
-    int rightSuccessCode = List_append(right, INT_MAX);
-    if (rightSuccessCode != 0) {
-        List_destroy(&left);
-        List_destroy(&right);
-        return 1;
-    }
-
     int left_index = 0;
     int right_index = 0;
+    int left_length = List_length(left);
+    int right_length = List_length(right);
 
     for (int i = start_index; i < end_index + 1; i++) {
-        if (left->_array[left_index] < right->_array[right_index]) {
-            list->_array[i] = left->_array[left_index];
-            left_index++;
+        if (left_index == left_length) {
+            list->_array[i] = right->_array[right_index++];
+        } else if (right_index == right_length) {
+            list->_array[i] = left->_array[left_index++];
+        } else if (reverse) {
+            if (left->_array[left_index] > right->_array[right_index]) {
+                list->_array[i] = left->_array[left_index++];
+            } else {
+                list->_array[i] = right->_array[right_index++];
+            }
         } else {
-            list->_array[i] = right->_array[right_index];
-            right_index++;
+            if (left->_array[left_index] < right->_array[right_index]) {
+                list->_array[i] = left->_array[left_index++];
+            } else {
+                list->_array[i] = right->_array[right_index++];
+            }
         }
     }
 
@@ -138,16 +145,16 @@ int List_merge(List *list, int start_index, int mid_index, int end_index) {
     return 0;
 }
 
-int List_mergeSort(List *list, int start_index, int end_index) {
+int List_mergeSort(List *list, int start_index, int end_index, bool reverse) {
     if (start_index < end_index) {
         int mid_index = (start_index + end_index) / 2;
-        if (List_mergeSort(list, start_index, mid_index) != 0) {
+        if (List_mergeSort(list, start_index, mid_index, reverse) != 0) {
             return 1;
         }
-        if (List_mergeSort(list, mid_index + 1, end_index) != 0) {
+        if (List_mergeSort(list, mid_index + 1, end_index, reverse) != 0) {
             return 1;
         }
-        if (List_merge(list, start_index, mid_index, end_index) != 0) {
+        if (List_merge(list, start_index, mid_index, end_index, reverse) != 0) {
             return 1;
         }
     }
@@ -156,8 +163,8 @@ int List_mergeSort(List *list, int start_index, int end_index) {
 }
 
 
-int List_sort(List *list) {
-    return List_mergeSort(list, 0, list->_currentSize);
+int List_sort(List *list, bool reverse) {
+    return List_mergeSort(list, 0, list->_currentSize, reverse);
 }
 
 List *List_copy(List *list) {

@@ -1,13 +1,6 @@
 #include "stdlib.h"
 #include "stdio.h"
-
-#define INT_MAX 2147483647
-#define ERRNO_001 2147483646
-#define ERRNO_002 2147483645
-#define ERRNO_003 2147483644
-#define ERRNO_004 2147483643
-#define ERRNO_005 2147483642
-#define ERRNO_SIZE 5
+#include "stdbool.h"
 
 typedef struct list List;
 
@@ -70,19 +63,20 @@ int List_insert(List *list, int index, int element);
 int List_remove(List *list, int element);
 
 /*
- * Function: List_sort(List *list)
+ * Function: List_sort(List *list, bool reverse)
  * ----------------------------
- *  Sort the given list into ascending order
+ *  Sort the given list into ascending/descending order
  *
  *  ==============================
  *  WARNING: This is an in-place operation
  *  ==============================
  *
  *  *list: the list to sort
+ *  reverse: true if wanting list to be sorted in descending order, false for ascending order
  *
  *  returns: int (0 for success, Non-0 for error)
  */
-int List_sort(List *list);
+int List_sort(List *list, bool reverse);
 
 /*
  * Function: List_copy(List *list)
