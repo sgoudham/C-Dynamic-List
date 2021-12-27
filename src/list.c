@@ -1,4 +1,5 @@
 #include "list.h"
+#include "stdarg.h"
 
 /*
  * -- ERROR CODES --
@@ -70,6 +71,22 @@ int List_append(List *list, int element) {
     }
     list->_array[++list->_currentSize] = element;
 
+    return 0;
+}
+
+int List_append_all(List *list, int element_count, ...) {
+    va_list elements;
+    va_start(elements, element_count);
+
+    for (int i = 0; i < element_count; i++) {
+        int returnCode = List_append(list, va_arg(elements, int));
+        if (returnCode != 0) {
+            va_end(elements);
+            return returnCode;
+        }
+    }
+
+    va_end(elements);
     return 0;
 }
 

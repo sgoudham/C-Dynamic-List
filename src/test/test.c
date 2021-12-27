@@ -39,17 +39,7 @@ void shouldReturnListLengthTwo() {
 void shouldReturnSortedListInAscendingOrder() {
     // Arrange
     List *list = List_new();
-    List_append(list, 10);
-    List_append(list, 9);
-    List_append(list, 8);
-    List_append(list, 7);
-    List_append(list, 6);
-    List_append(list, 5);
-    List_append(list, 4);
-    List_append(list, 3);
-    List_append(list, 2);
-    List_append(list, 1);
-    List_append(list, 0);
+    List_append_all(list, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0);
 
     // Act
     int returnCode = List_sort(list, false);
@@ -85,16 +75,7 @@ void shouldClearList() {
 void shouldReturnListMaxLengthTwenty() {
     // Arrange
     List *list = List_new();
-    List_append(list, 0);
-    List_append(list, 1);
-    List_append(list, 2);
-    List_append(list, 3);
-    List_append(list, 4);
-    List_append(list, 5);
-    List_append(list, 6);
-    List_append(list, 7);
-    List_append(list, 8);
-    List_append(list, 9);
+    List_append_all(list, 10, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
     // Mid-Assert
     assert(List_max_length(list) == 10);
@@ -112,11 +93,7 @@ void shouldReturnListMaxLengthTwenty() {
 void shouldCopyPopulatedList() {
     // Arrange
     List *list = List_new();
-    List_append(list, 0);
-    List_append(list, 1);
-    List_append(list, 2);
-    List_append(list, 3);
-    List_append(list, 4);
+    List_append_all(list, 5, 0, 1, 2, 3, 4);
 
     // Act
     List *copiedList = List_copy(list);
@@ -167,10 +144,7 @@ void shouldCopyEmptyList() {
 void shouldRemoveElementFromList() {
     // Arrange
     List *list = List_new();
-    List_append(list, 0);
-    List_append(list, 1);
-    List_append(list, 2);
-    List_append(list, 0);
+    List_append_all(list, 4, 0, 1, 2, 0);
 
     // Act
     List_remove(list, 0);

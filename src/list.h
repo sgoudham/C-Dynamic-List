@@ -38,6 +38,19 @@ int List_get(List *list, int index);
 int List_append(List *list, int element);
 
 /*
+ * Function: List_append_all(List *list, int element_count, ...)
+ * ----------------------------
+ *  Append multiple elements into the given list
+ *
+ *  *list: the list to append onto
+ *  element_count: number of elements to append into the given list
+ *  ...: variable list of integers to append into the given list
+ *
+ *  returns: int (0 for success, Non-0 for error)
+ */
+int List_append_all(List *list, int element_count, ...);
+
+/*
  * Function: List_insert(List *list, int index, int element)
  * ----------------------------
  *  Insert the given element into a valid index of the list
