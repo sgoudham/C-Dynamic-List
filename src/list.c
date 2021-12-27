@@ -218,7 +218,7 @@ int List_length(List *list) {
     return list->_currentSize + 1;
 }
 
-int List_maxLength(List *list) {
+int List_max_length(List *list) {
     return list->_maxSize;
 }
 

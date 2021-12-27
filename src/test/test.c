@@ -97,13 +97,13 @@ void shouldReturnListMaxLengthTwenty() {
     List_append(list, 9);
 
     // Mid-Assert
-    assert(List_maxLength(list) == 10);
+    assert(List_max_length(list) == 10);
 
     // Act
     List_append(list, 10);
 
     // Assert
-    assert(List_maxLength(list) == 20);
+    assert(List_max_length(list) == 20);
     List_destroy(&list);
 
     printSuccess(__func__);
@@ -123,7 +123,7 @@ void shouldCopyPopulatedList() {
 
     // Assert
     assert(List_length(copiedList) == List_length(list));
-    assert(List_maxLength(copiedList) == List_maxLength(list));
+    assert(List_max_length(copiedList) == List_max_length(list));
     for (int i = 0; i < List_length(copiedList); i++) {
         assert(List_get(list, i) == List_get(copiedList, i));
     }
@@ -157,7 +157,7 @@ void shouldCopyEmptyList() {
 
     // Assert
     assert(List_length(copiedList) == 0);
-    assert(List_maxLength(copiedList) == 10);
+    assert(List_max_length(copiedList) == 10);
     List_destroy(&list);
     List_destroy(&copiedList);
 

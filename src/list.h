@@ -136,7 +136,7 @@ List *List_slice(List *list, int start_index, int end_index);
 int List_length(List *list);
 
 /*
- * Function: List_maxLength(List *list)
+ * Function: List_max_length(List *list)
  * ----------------------------
  *  Return the maxLength (current maximum length allocated in memory) of the given list
  *
@@ -144,7 +144,7 @@ int List_length(List *list);
  *
  *  returns: int
  */
-int List_maxLength(List *list);
+int List_max_length(List *list);
 
 /*
  * Function: List_print(List *list)
