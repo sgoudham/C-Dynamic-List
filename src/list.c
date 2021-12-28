@@ -184,6 +184,26 @@ int List_sort(List *list, bool reverse) {
     return List_mergeSort(list, 0, list->_currentSize, reverse);
 }
 
+int List_reverse(List *list) {
+    for (int i = 0, j = list->_currentSize; i < j; i++, j--) {
+        int element = List_get(list, j);
+        if (element == ERRNO_003) {
+            return element;
+        }
+
+        int previousElement = List_insert(list, i, element);
+        if (previousElement == ERRNO_003) {
+            return element;
+        }
+
+        if (List_insert(list, j, previousElement) == ERRNO_003) {
+            return ERRNO_003;
+        }
+    }
+
+    return 0;
+}
+
 List *List_copy(List *list) {
     List *listCopy = List_createList(list->_maxSize, list->_currentSize);
     if (!listCopy) {

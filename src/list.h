@@ -124,6 +124,25 @@ int List_sort(List *list, bool reverse);
  *
  * Description
  * ----------------------------
+ *  Reverse the elements in the list
+ *  =======================================
+ *  WARNING: This is an in-place operation
+ *  =======================================
+ *
+ * Params
+ * ----------------------------
+ *  *list       the list to reverse elements in
+ *
+ * Returns
+ * ----------------------------
+ *  int (0 for success, Non-0 for error)
+ */
+int List_reverse(List *list);
+
+/*
+ *
+ * Description
+ * ----------------------------
  *  Return a shallow copy of the given list
  *
  * Params

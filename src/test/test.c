@@ -159,6 +159,26 @@ void shouldRemoveElementFromList() {
     printSuccess(__func__);
 }
 
+void shouldReverseList() {
+    // Arrange
+    List *list = List_new();
+    List_append_all(list, 5, 50, 100, 75, 200, 300);
+
+    // Act
+    int returnCode = List_reverse(list);
+
+    // Assert
+    assert(returnCode == 0);
+    assert(List_get(list, 0) == 300);
+    assert(List_get(list, 1) == 200);
+    assert(List_get(list, 2) == 75);
+    assert(List_get(list, 3) == 100);
+    assert(List_get(list, 4) == 50);
+    List_destroy(&list);
+
+    printSuccess(__func__);
+}
+
 int main() {
     printf("============================================");
     printf("\nSTART TESTING");
@@ -172,6 +192,7 @@ int main() {
     shouldCopyEmptyList();
     shouldInsertElementIntoListIndexZero();
     shouldRemoveElementFromList();
+    shouldReverseList();
     printf("\n\n============================================");
     printf("\nFINISH TESTING");
     printf("\n============================================");
