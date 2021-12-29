@@ -259,8 +259,13 @@ int List_max_length(List *list) {
     return list->_maxSize;
 }
 
-void List_print(List *list) {
-    printf("[");
+void List_print(List *list, bool new_line) {
+    if (new_line) {
+        printf("\n[");
+    } else {
+        printf("[");
+    }
+
     for (int i = 0; i < list->_currentSize + 1; i++) {
         if (i == list->_currentSize) {
             printf("%i", list->_array[i]);
@@ -268,6 +273,7 @@ void List_print(List *list) {
             printf("%i, ", list->_array[i]);
         }
     }
+
     printf("]");
 }
 

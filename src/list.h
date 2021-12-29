@@ -239,12 +239,13 @@ int List_max_length(List *list);
  * Params
  * ----------------------------
  *  *list       the list to print out
+ *  new_line    true if wanting to print on a new line, false if not
  *
  * Returns
  * ----------------------------
  *  void
  */
-void List_print(List *list);
+void List_print(List *list, bool new_line);
 
 /*
  *
