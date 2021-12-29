@@ -69,6 +69,7 @@ int List_append(List *list, int element) {
         }
         list->_array = temp;
     }
+
     list->_array[++list->_currentSize] = element;
 
     return 0;
@@ -249,6 +250,21 @@ List *List_slice(List *list, int start_index, int end_index) {
     }
 
     return slicedList;
+}
+
+int List_extend(List *list_to_extend, List *input_list) {
+    if (!list_to_extend || !input_list) {
+        return 1;
+    }
+
+    for (int i = 0; i < input_list->_currentSize + 1; i++) {
+        int returnCode = List_append(list_to_extend, List_get(input_list, i));
+        if (returnCode != 0) {
+            return returnCode;
+        }
+    }
+
+    return 0;
 }
 
 int List_length(List *list) {

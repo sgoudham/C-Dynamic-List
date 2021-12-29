@@ -202,6 +202,29 @@ List *List_slice(List *list, int start_index, int end_index);
  *
  * Description
  * ----------------------------
+ *  Extend the given list_to_extend with elements from given input_list
+ *
+ * Params
+ * ----------------------------
+ *  *list_to_extend     the list to extend with elements from input_list
+ *  *input_list         the list containing elements to insert into list_to_extend
+ *
+ *  Example
+ * ----------------------------
+ *  Given list1 -> [1, 2] AND list2 -> [3, 4, 5]
+ *  When List_extend(list1, list2);
+ *  Then list1 -> [1, 2, 3, 4, 5]
+ *
+ * Returns
+ * ----------------------------
+ *  int (0 for success, Non-0 for error)
+ */
+int List_extend(List *list_to_extend, List *input_list);
+
+/*
+ *
+ * Description
+ * ----------------------------
  *  Return the length of the given list
  *
  * Params

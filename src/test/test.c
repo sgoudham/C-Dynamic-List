@@ -179,6 +179,28 @@ void shouldReverseList() {
     printSuccess(__func__);
 }
 
+void shouldExtendList() {
+    // Arrange
+    List *list_to_extend = List_new();
+    List *input_list = List_new();
+    List_append_all(list_to_extend, 2, 1, 2);
+    List_append_all(input_list, 3, 3, 4, 5);
+
+    // Act
+    int returnCode = List_extend(list_to_extend, input_list);
+
+    // Assert
+    assert(returnCode == 0);
+    assert(List_length(list_to_extend) == 5);
+    for (int i = 0; i < 5; i++) {
+        assert(List_get(list_to_extend, i) == i + 1);
+    }
+    List_destroy(&list_to_extend);
+    List_destroy(&input_list);
+
+    printSuccess(__func__);
+}
+
 int main() {
     printf("============================================");
     printf("\nSTART TESTING");
@@ -193,6 +215,7 @@ int main() {
     shouldInsertElementIntoListIndexZero();
     shouldRemoveElementFromList();
     shouldReverseList();
+    shouldExtendList();
     printf("\n\n============================================");
     printf("\nFINISH TESTING");
     printf("\n============================================");
