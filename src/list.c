@@ -98,73 +98,14 @@ int List_remove(List *list, int element) {
         return ERRNO_005;
     }
 
-    for (int i = positionToDelete; i < list->_currentSize + 1; i++) {
+    int elementToDelete = list->_array[positionToDelete];
+    for (int i = positionToDelete; i < list->_currentSize; i++) {
         list->_array[i] = list->_array[i + 1];
     }
     list->_currentSize--;
 
-    return 0;
+    return elementToDelete;
 }
-
-int List_merge(List *list, int start_index, int mid_index, int end_index, bool reverse) {
-    List *left = List_slice(list, start_index, mid_index + 1);
-    if (!left) {
-        return 1;
-    }
-    List *right = List_slice(list, mid_index + 1, end_index + 1);
-    if (!right) {
-        List_destroy(&left);
-        return 1;
-    }
-
-    int left_index = 0;
-    int right_index = 0;
-    int left_length = List_length(left);
-    int right_length = List_length(right);
-
-    for (int i = start_index; i < end_index + 1; i++) {
-        if (left_index == left_length) {
-            list->_array[i] = right->_array[right_index++];
-        } else if (right_index == right_length) {
-            list->_array[i] = left->_array[left_index++];
-        } else if (reverse) {
-            if (left->_array[left_index] > right->_array[right_index]) {
-                list->_array[i] = left->_array[left_index++];
-            } else {
-                list->_array[i] = right->_array[right_index++];
-            }
-        } else {
-            if (left->_array[left_index] < right->_array[right_index]) {
-                list->_array[i] = left->_array[left_index++];
-            } else {
-                list->_array[i] = right->_array[right_index++];
-            }
-        }
-    }
-
-    List_destroy(&left);
-    List_destroy(&right);
-
-    return 0;
-}
-
-int List_mergeSort(List *list, int start_index, int end_index, bool reverse) {
-    if (start_index < end_index) {
-        int mid_index = (start_index + end_index) / 2;
-        if (List_mergeSort(list, start_index, mid_index, reverse) != 0) {
-            return 1;
-        }
-        if (List_mergeSort(list, mid_index + 1, end_index, reverse) != 0) {
-            return 1;
-        }
-        if (List_merge(list, start_index, mid_index, end_index, reverse) != 0) {
-            return 1;
-        }
-    }
-
-    return 0;
-}
-
 
 int List_sort(List *list, bool reverse) {
     return List_mergeSort(list, 0, list->_currentSize, reverse);
@@ -301,4 +242,63 @@ List *List_createList(int maxSize, int currentSize) {
     list->_currentSize = currentSize;
 
     return list;
+}
+
+int List_merge(List *list, int start_index, int mid_index, int end_index, bool reverse) {
+    List *left = List_slice(list, start_index, mid_index + 1);
+    if (!left) {
+        return 1;
+    }
+    List *right = List_slice(list, mid_index + 1, end_index + 1);
+    if (!right) {
+        List_destroy(&left);
+        return 1;
+    }
+
+    int left_index = 0;
+    int right_index = 0;
+    int left_length = List_length(left);
+    int right_length = List_length(right);
+
+    for (int i = start_index; i < end_index + 1; i++) {
+        if (left_index == left_length) {
+            list->_array[i] = right->_array[right_index++];
+        } else if (right_index == right_length) {
+            list->_array[i] = left->_array[left_index++];
+        } else if (reverse) {
+            if (left->_array[left_index] > right->_array[right_index]) {
+                list->_array[i] = left->_array[left_index++];
+            } else {
+                list->_array[i] = right->_array[right_index++];
+            }
+        } else {
+            if (left->_array[left_index] < right->_array[right_index]) {
+                list->_array[i] = left->_array[left_index++];
+            } else {
+                list->_array[i] = right->_array[right_index++];
+            }
+        }
+    }
+
+    List_destroy(&left);
+    List_destroy(&right);
+
+    return 0;
+}
+
+int List_mergeSort(List *list, int start_index, int end_index, bool reverse) {
+    if (start_index < end_index) {
+        int mid_index = (start_index + end_index) / 2;
+        if (List_mergeSort(list, start_index, mid_index, reverse) != 0) {
+            return 1;
+        }
+        if (List_mergeSort(list, mid_index + 1, end_index, reverse) != 0) {
+            return 1;
+        }
+        if (List_merge(list, start_index, mid_index, end_index, reverse) != 0) {
+            return 1;
+        }
+    }
+
+    return 0;
 }

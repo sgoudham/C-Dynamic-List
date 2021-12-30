@@ -147,9 +147,10 @@ void shouldRemoveElementFromList() {
     List_append_all(list, 4, 0, 1, 2, 0);
 
     // Act
-    List_remove(list, 0);
+    int deletedElement = List_remove(list, 0);
 
     // Assert
+    assert(deletedElement == 0);
     assert(List_length(list) == 3);
     assert(List_get(list, 0) == 1);
     assert(List_get(list, 1) == 2);
