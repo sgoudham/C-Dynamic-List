@@ -4,17 +4,6 @@
 #define DEFAULT_MAX_SIZE 10
 #define ERRNO_SIZE 5
 
-// [ERRNO 2147483646] -> Cannot Allocate Memory To Backing Array
-#define ERRNO_001 2147483646
-// [ERRNO 2167483645] -> Cannot Reallocate Memory To Backing Array
-#define ERRNO_002 2147483645
-// [ERRNO 2147483644] -> Index Out Of Bounds For Retrieving Element
-#define ERRNO_003 2147483644
-// [ERRNO 2147483643] -> Values 2147483646 -> 2147483642 Cannot Be Inserted Into List
-#define ERRNO_004 2147483643
-// [ERRNO 2147483642] -> Element Does Not Exist Within List
-#define ERRNO_005 2147483642
-
 List *List_createList(int maxSize, int currentSize);
 
 int List_merge(List *list, int start_index, int mid_index, int end_index, bool reverse);
