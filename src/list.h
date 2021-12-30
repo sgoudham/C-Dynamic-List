@@ -79,7 +79,7 @@ int List_append_all(List *list, int element_count, ...);
  *
  * Returns
  * ----------------------------
- *  int (0 for success, Non-0 for error)
+ *  int (The previous element at the given index before inserting)
  */
 int List_insert(List *list, int index, int element);
 
