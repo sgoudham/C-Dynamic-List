@@ -2,6 +2,17 @@
 #include "stdio.h"
 #include "stdbool.h"
 
+// [ERRNO 2147483646] -> Cannot Allocate Memory To Backing Array
+#define ERRNO_001 2147483646
+// [ERRNO 2167483645] -> Cannot Reallocate Memory To Backing Array
+#define ERRNO_002 2147483645
+// [ERRNO 2147483644] -> Index Out Of Bounds For Retrieving Element
+#define ERRNO_003 2147483644
+// [ERRNO 2147483643] -> Values 2147483646 -> 2147483642 Cannot Be Inserted Into List
+#define ERRNO_004 2147483643
+// [ERRNO 2147483642] -> Element Does Not Exist Within List
+#define ERRNO_005 2147483642
+
 typedef struct list List;
 
 /*
@@ -99,6 +110,22 @@ int List_insert(List *list, int index, int element);
  *  int (0 for success, Non-0 for error)
  */
 int List_remove(List *list, int element);
+
+/*
+ *
+ * Description
+ * ----------------------------
+ *  Return the last element of the given list and remove it
+ *
+ * Params
+ * ----------------------------
+ *  *list       the list to pop last element from
+ *
+ * Returns
+ * ----------------------------
+ *  int (Last element of the list)
+ */
+int List_pop(List *list);
 
 /*
  *
@@ -220,6 +247,23 @@ List *List_slice(List *list, int start_index, int end_index);
  *  int (0 for success, Non-0 for error)
  */
 int List_extend(List *list_to_extend, List *input_list);
+
+/*
+ *
+ * Description
+ * ----------------------------
+ *  Return the number of times the given element appears in the given list
+ *
+ * Params
+ * ----------------------------
+ *  *list       the list to search for the given element and count
+ *  element     the element to look for within the given list
+ *
+ * Returns
+ * ----------------------------
+ *  int (Number of occurrences of the given element within given list)
+ */
+int List_count(List *list, int element);
 
 /*
  *
