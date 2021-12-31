@@ -140,12 +140,12 @@ int List_reverse(List *list) {
     for (int i = 0, j = list->_currentSize; i < j; i++, j--) {
         int element = List_get(list, j);
         if (element == ERRNO_003) {
-            return element;
+            return ERRNO_003;
         }
 
         int previousElement = List_insert(list, i, element);
         if (previousElement == ERRNO_003) {
-            return element;
+            return ERRNO_003;
         }
 
         if (List_insert(list, j, previousElement) == ERRNO_003) {
