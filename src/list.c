@@ -106,6 +106,32 @@ int List_remove(List *list, int element) {
     return 0;
 }
 
+int List_delete(List *list, int index) {
+    if (!list) {
+        return 1;
+    }
+
+    if (index < 0 || index > list->_currentSize) {
+        return ERRNO_003;
+    }
+
+    int elementToDelete = list->_array[index];
+    for (int i = index; i < list->_currentSize; i++) {
+        list->_array[i] = list->_array[i + 1];
+    }
+    list->_currentSize--;
+
+    return elementToDelete;
+}
+
+int List_pop(List *list) {
+    if (!list) {
+        return 1;
+    }
+
+    return List_delete(list, list->_currentSize);
+}
+
 int List_sort(List *list, bool reverse) {
     return List_mergeSort(list, 0, list->_currentSize, reverse);
 }

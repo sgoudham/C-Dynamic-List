@@ -18,8 +18,8 @@ void shouldReturnListLengthZero() {
 
     // Act -> Assert
     assert(List_length(list) == 0);
-    List_destroy(&list);
 
+    List_destroy(&list);
     printSuccess(__func__);
 }
 
@@ -31,8 +31,8 @@ void shouldReturnListLengthTwo() {
 
     // Act -> Assert
     assert(List_length(list) == 2);
-    List_destroy(&list);
 
+    List_destroy(&list);
     printSuccess(__func__);
 }
 
@@ -49,8 +49,8 @@ void shouldReturnSortedListInAscendingOrder() {
     for (int i = 0; i < List_length(list); i++) {
         assert(List_get(list, i) == i);
     }
-    List_destroy(&list);
 
+    List_destroy(&list);
     printSuccess(__func__);
 }
 
@@ -67,8 +67,8 @@ void shouldClearList() {
 
     // Assert
     assert(List_length(list) == 0);
-    List_destroy(&list);
 
+    List_destroy(&list);
     printSuccess(__func__);
 }
 
@@ -85,8 +85,8 @@ void shouldReturnListMaxLengthTwenty() {
 
     // Assert
     assert(List_max_length(list) == 20);
-    List_destroy(&list);
 
+    List_destroy(&list);
     printSuccess(__func__);
 }
 
@@ -104,9 +104,9 @@ void shouldCopyPopulatedList() {
     for (int i = 0; i < List_length(copiedList); i++) {
         assert(List_get(list, i) == List_get(copiedList, i));
     }
+
     List_destroy(&list);
     List_destroy(&copiedList);
-
     printSuccess(__func__);
 }
 
@@ -120,8 +120,8 @@ void shouldInsertElementIntoListIndexZero() {
 
     // Assert
     assert(List_get(list, 0) == 0);
-    List_destroy(&list);
 
+    List_destroy(&list);
     printSuccess(__func__);
 }
 
@@ -135,9 +135,9 @@ void shouldCopyEmptyList() {
     // Assert
     assert(List_length(copiedList) == 0);
     assert(List_max_length(copiedList) == 10);
+
     List_destroy(&list);
     List_destroy(&copiedList);
-
     printSuccess(__func__);
 }
 
@@ -154,8 +154,8 @@ void shouldRemoveElementFromList() {
     assert(List_get(list, 0) == 1);
     assert(List_get(list, 1) == 2);
     assert(List_get(list, 2) == 0);
-    List_destroy(&list);
 
+    List_destroy(&list);
     printSuccess(__func__);
 }
 
@@ -174,8 +174,8 @@ void shouldReverseList() {
     assert(List_get(list, 2) == 75);
     assert(List_get(list, 3) == 100);
     assert(List_get(list, 4) == 50);
-    List_destroy(&list);
 
+    List_destroy(&list);
     printSuccess(__func__);
 }
 
@@ -195,9 +195,49 @@ void shouldExtendList() {
     for (int i = 0; i < 5; i++) {
         assert(List_get(list_to_extend, i) == i + 1);
     }
+
     List_destroy(&list_to_extend);
     List_destroy(&input_list);
+    printSuccess(__func__);
+}
 
+void shouldDeleteElementFromList() {
+    // Arrange
+    List *list = List_new();
+    List_append_all(list, 6, 0, 1, 2, 3, 4, 5);
+
+    // Act
+    int deletedElement = List_delete(list, 1);
+
+    // Assert
+    assert(deletedElement == 1);
+    assert(List_length(list) == 5);
+    assert(List_get(list, 0) == 0);
+    assert(List_get(list, 1) == 2);
+    assert(List_get(list, 2) == 3);
+    assert(List_get(list, 3) == 4);
+    assert(List_get(list, 4) == 5);
+
+    List_destroy(&list);
+    printSuccess(__func__);
+}
+
+void shouldPopElementFromList() {
+    // Arrange
+    List *list = List_new();
+    List_append_all(list, 6, 0, 1, 2, 3, 4, 5);
+
+    // Act
+    int poppedElement = List_pop(list);
+
+    // Assert
+    assert(poppedElement == 5);
+    assert(List_length(list) == 5);
+    for (int i = 0; i < 5; i++) {
+        assert(List_get(list, i) == i);
+    }
+
+    List_destroy(&list);
     printSuccess(__func__);
 }
 
@@ -216,6 +256,8 @@ int main() {
     shouldRemoveElementFromList();
     shouldReverseList();
     shouldExtendList();
+    shouldDeleteElementFromList();
+    shouldPopElementFromList();
     printf("\n\n============================================");
     printf("\nFINISH TESTING");
     printf("\n============================================");
