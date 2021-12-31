@@ -115,6 +115,23 @@ int List_remove(List *list, int element);
  *
  * Description
  * ----------------------------
+ *  Delete the element at the given index of the given list
+ *
+ * Params
+ * ----------------------------
+ *  *list       the list to remove the element at given index
+ *  index       the index to delete within the given list
+ *
+ * Returns
+ * ----------------------------
+ *  int (The deleted element)
+ */
+int List_delete(List *list, int index);
+
+/*
+ *
+ * Description
+ * ----------------------------
  *  Return the last element of the given list and remove it
  *
  * Params
