@@ -50,6 +50,7 @@ int List_append(List *list, int element) {
         list->_maxSize *= 2;
         int *temp = realloc(list->_array, list->_maxSize * sizeof(int));
         if (!temp) {
+            list->_maxSize /= 2;
             return ERRNO_002;
         }
         list->_array = temp;
