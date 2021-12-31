@@ -107,7 +107,7 @@ int List_insert(List *list, int index, int element);
  *
  * Returns
  * ----------------------------
- *  int (The deleted element)
+ *  int (0 for success, Non-0 for error)
  */
 int List_remove(List *list, int element);
 

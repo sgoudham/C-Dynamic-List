@@ -98,13 +98,12 @@ int List_remove(List *list, int element) {
         return ERRNO_005;
     }
 
-    int elementToDelete = list->_array[positionToDelete];
     for (int i = positionToDelete; i < list->_currentSize; i++) {
         list->_array[i] = list->_array[i + 1];
     }
     list->_currentSize--;
 
-    return elementToDelete;
+    return 0;
 }
 
 int List_sort(List *list, bool reverse) {
