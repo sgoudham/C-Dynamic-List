@@ -219,6 +219,23 @@ int List_extend(List *list_to_extend, List *input_list) {
     return 0;
 }
 
+int List_count(List *list, int element) {
+    if (!list) {
+        return 1;
+    }
+
+    int count = 0;
+    int listLength = List_length(list);
+
+    for (int i = 0; i < listLength; i++) {
+        if (element == List_get(list, i)) {
+            count++;
+        }
+    }
+
+    return count;
+}
+
 int List_length(List *list) {
     return list->_currentSize + 1;
 }

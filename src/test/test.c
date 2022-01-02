@@ -241,6 +241,21 @@ void shouldPopElementFromList() {
     printSuccess(__func__);
 }
 
+void shouldCountElementsInList() {
+    // Arrange
+    List *list = List_new();
+    List_append_all(list, 5, 0, 1, 1, 3, 4, 5);
+
+    // Act
+    int count = List_count(list, 1);
+
+    // Assert
+    assert(count == 2);
+
+    List_destroy(&list);
+    printSuccess(__func__);
+}
+
 int main() {
     printf("============================================");
     printf("\nSTART TESTING");
@@ -258,6 +273,7 @@ int main() {
     shouldExtendList();
     shouldDeleteElementFromList();
     shouldPopElementFromList();
+    shouldCountElementsInList();
     printf("\n\n============================================");
     printf("\nFINISH TESTING");
     printf("\n============================================");
