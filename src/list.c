@@ -2,7 +2,7 @@
 #include "stdarg.h"
 
 #define DEFAULT_MAX_SIZE 10
-#define ERRNO_SIZE 5
+#define ERRNO_SIZE 6
 
 List *List_createList(int maxSize, int currentSize);
 
@@ -21,7 +21,8 @@ int errorCodes[ERRNO_SIZE] = {
         ERRNO_002,
         ERRNO_003,
         ERRNO_004,
-        ERRNO_005
+        ERRNO_005,
+        ERRNO_006
 };
 
 List *List_new() {
@@ -221,7 +222,7 @@ int List_extend(List *list_to_extend, List *input_list) {
 
 int List_count(List *list, int element) {
     if (!list) {
-        return 1;
+        return ERRNO_006;
     }
 
     int count = 0;

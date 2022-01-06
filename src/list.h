@@ -12,6 +12,8 @@
 #define ERRNO_004 2147483643
 // [ERRNO 2147483642] -> Element Does Not Exist Within List
 #define ERRNO_005 2147483642
+// [ERRNO 2147483641] -> Null List
+#define ERRNO_006 2147483641
 
 typedef struct list List;
 
